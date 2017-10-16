@@ -18,6 +18,9 @@ app.set("view engine","handlebars");
 //which in turn will require the models
 //files
 
+require("./controllers/apiroutes");
+require("./controllers/htmlroutes");
+
 app.listen(PORT, function(){
     console.log("App listening on PORT: "+PORT);
 });
