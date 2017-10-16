@@ -1,0 +1,27 @@
+{
+  "name": "times",
+  "version": "1.0.0",
+  "description": "Use mongodb and webscraping to pull articles out of NYTimes.  CRUD capability included",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MelanieWest/Times_Scraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MelanieWest/Times_Scraper/issues"
+  },
+  "homepage": "https://github.com/MelanieWest/Times_Scraper#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "request": "^2.83.0"
+  }
+}
