@@ -17,9 +17,26 @@ module.exports = function (app) {
 
 
     //test the home page.  No functionality yet
-    app.get("/", function (req, res) {
-        res.send("Hello World");
-    });
+    // app.get("/", function (req, res) {
+    //     res.send("Hello World");
+    // });
+
+    app.get("/", function(req, res) {
+                 
+         db.NewYorkTimes.find({}, function (error, found) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                res.render("index",{data: found});
+            }
+        });
+        
+      });
+
+
+
+
 
     app.get("/all", function (req, res) {
         db.NewYorkTimes.find({}, function (error, found) {
@@ -107,5 +124,21 @@ module.exports = function (app) {
 
         res.send("scrape complete");
     });
+
+
+    app.post('/update/:id', (request, response) => {
+        let updateID = parseInt(request.params.id);
+        if (isNaN(updateID)) {
+          //Handle invalid IDs, we only want integers.  This shouldn't ever happen
+          response.send("I really don't know how you accomplished this, but you have selected an invalid ID. Impressive, but it won't work ");
+        }
+                
+        //db.NewYorkTimes.update({})
+            console.log('update');
+      
+            response.redirect('/')
+            
+          });
+    
 
 };  //end of module exports

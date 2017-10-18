@@ -1,4 +1,22 @@
 <div>
-    <p>You have arrived</p>
-    <p>{{article}}</p>
+    <p> this page is rendering </p>
+ 
+  <div id ="col2" class = "col-4">
+
+      <h4>New York Times Articles </h4>
+      
+      <ul>
+      {{#each data }}
+        <li>
+          <p> <a class="delete" href="/delete/{{this._id}}" style = "color:red">Remove from list</a></p> 
+          <form action = "/update/{{this._id}}" method ="POST">
+            <text id="txtbx-rt" >{{this.title}}</text> 
+            <br>      
+            <text id="txtbx-rt" >{{this.link}}</text>       
+            <button type="submit" id="read" >Read</button>,
+          </form>
+        </li>
+      {{/each}}
+      </ul>
+    </div>
 </div>
