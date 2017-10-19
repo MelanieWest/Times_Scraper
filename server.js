@@ -1,7 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 var app = express();
+
+//local mongo db nytPopulator
+mongoose.Promise = Promise;
+mongoose.connect("mongodb://localhost/nytPopulator",{
+    useMongoClient: true
+});
 
 var PORT = process.env.PORT ||3000;
 
@@ -18,10 +25,10 @@ const exphbs = require("express-handlebars");
 app.engine("handlebars",exphbs({defaultLayout:"main"}));
 app.set("view engine","handlebars");
 
-require("./controllers/apiroutes")(app);
+require("./controllers/mongojsRoutes")(app);
 var Article = require("./models/Articles.js");
 var Note = require("./models/Notes.js");      
-// require("./controllers/htmlroutes");
+// require("./controllers/gooseRoutes");
 
 app.listen(PORT, function(){
     console.log("App listening on PORT: "+PORT);
