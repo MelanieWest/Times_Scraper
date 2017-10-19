@@ -19,6 +19,8 @@ app.engine("handlebars",exphbs({defaultLayout:"main"}));
 app.set("view engine","handlebars");
 
 require("./controllers/apiroutes")(app);
+var Article = require("./models/Articles.js");
+var Note = require("./models/Notes.js");      
 // require("./controllers/htmlroutes");
 
 app.listen(PORT, function(){

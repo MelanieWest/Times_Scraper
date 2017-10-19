@@ -131,9 +131,8 @@ module.exports = function (app) {
         if (isNaN(updateID)) {
           //Handle invalid IDs, we only want integers.  This shouldn't ever happen
           response.send("I really don't know how you accomplished this, but you have selected an invalid ID. Impressive, but it won't work ");
-        }
-                
-        //db.NewYorkTimes.update({})
+        }       
+        db.NewYorkTimes.update({})
             console.log('update');
       
             response.redirect('/')
