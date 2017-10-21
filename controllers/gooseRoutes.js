@@ -17,8 +17,8 @@ module.exports = function(app){
     
         //local mongo db nytPopulator
     mongoose.Promise = Promise;
-    mongoose.connect("mongodb://heroku_qk3bhr4k:lco9fc9ms9ktuo8mfaumndsjv7@ds227565.mlab.com:27565/heroku_qk3bhr4k"{
-    //mongoose.connect("mongodb://localhost/nytPopulator",{
+    //mongoose.connect("mongodb://heroku_qk3bhr4k:lco9fc9ms9ktuo8mfaumndsjv7@ds227565.mlab.com:27565/heroku_qk3bhr4k"{
+    mongoose.connect("mongodb://localhost/nytPopulator",{
         useMongoClient: true
     });
     
