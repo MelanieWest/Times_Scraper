@@ -1,7 +1,32 @@
-<div>
+ <style>
+   #articles {
+        display: inline-block;
+        overflow: auto;
+        width: 60%;
+        height: 700px;
+      }
+      #notes {
+        float: right;
+        width: 30%;
+      }
+      textarea, input {
+        display: block;
+        width: 100%;
+        background-color: #FCF5C7;
+      }
+      input {
+        height: 36px;
+        font-size: 24px;
+      }
+      textarea {
+        height: 200px;
+        font-size: 18px;
+      }
+    </style>
+    <div>
     <p> this page is rendering </p>
  
-  <div id ="col2" class = "col-4">
+  <div id ="articles" class = "col-4">
 
       <h4>New York Times Articles </h4>
       
@@ -10,9 +35,9 @@
         <li>
           <p> <a class="delete" href="/delete/{{this._id}}" style = "color:red">Remove from list</a></p> 
           <form action = "/update/{{this._id}}" method ="POST">
-            <text id="txtbx-rt" >{{this.title}}</text> 
+            <text>{{this.title}}</text> 
             <br>      
-            <text id="txtbx-rt" >{{this.link}}</text>       
+            <text>{{this.link}}</text>       
             <button type="submit" id="read" >Read</button>,
           </form>
         </li>

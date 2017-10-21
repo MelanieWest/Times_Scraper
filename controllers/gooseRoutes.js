@@ -16,13 +16,10 @@ module.exports = function(app){
  
     
         //local mongo db nytPopulator
-      mongoose.Promise = Promise;
-      mongoose.connect("mongodb://localhost/nytPopulator",{
+    mongoose.Promise = Promise;
+    mongoose.connect("mongodb://localhost/nytPopulator",{
         useMongoClient: true
     });
-
-   
-   
     
 
 
