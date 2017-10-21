@@ -18,11 +18,11 @@ module.exports = function(app){
         //local mongo db nytPopulator
     mongoose.Promise = Promise;
     //mongoose.connect("mongodb://heroku_qk3bhr4k:lco9fc9ms9ktuo8mfaumndsjv7@ds227565.mlab.com:27565/heroku_qk3bhr4k"{
-    mongoose.connect("mongodb://localhost/nytPopulator",{
+    mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/nytPopulator",{
         useMongoClient: true
     });
     
-
+   
 
     app.get("/nyt", function(req, res) {
       // First, we grab the body of the html with request
@@ -121,6 +121,49 @@ app.get("/articles", function(req, res) {
       });
   });
   
+
+// Route for saving/updating an Article's associated Note
+// router.post("/addNote", function (req, res) {
+//   var note = {
+//       title : req.body.title,
+//       body : req.body.note
+//   }
+//   console.log(note);
+  
+//   // Create a new note and pass the req.body to the entry
+//   Note
+//     .create(note)
+//     .then(function (dbNote) {
+//       // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+//       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
+//       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
+//       return Article.findOneAndUpdate({ _id: req.body.id }, { note: dbNote._id }, { new: true });
+//     })
+//     .then(function (dbArticle) {
+//       // If we were able to successfully update an Article, send it back to the client
+//         res.json(dbArticle);
+//     })
+//     .catch(function (err) {
+//       // If an error occurred, send it to the client
+//       res.json(err);
+//     });
+// });
+
+app.post("/delete/:id", function (req, res) {
+  // Grab every document in the Articles collection
+  Article
+    .remove({ _id: req.params.id })
+    .then(function (dbArticle) {
+      // If we were able to successfully delete Articles, redirect to saved article page
+      res.redirect("/articles")
+    })
+    .catch(function (err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+
 
 
 };      //end of module.exports
