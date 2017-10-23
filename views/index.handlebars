@@ -24,7 +24,7 @@
   }
 
   textarea {
-    height: 200px;
+    height: 80px;
     font-size: 18px;
   }
 </style>
@@ -41,50 +41,32 @@
       <li>
  
         {{!-- <form action="/update/{{this._id}}" method="POST"> --}}
-        <form action="/articles/{{this._id}}" method="post">
+
           <h3>{{this.title}}</h3>
           <br>
           <h4>Link :
             <a href="{{this.link}}" target="_blank">{{this.link}}</a>
           </h4>
-          <button class ="note-add" type="submit" value={{this._id}}>Add Note</button>
-          <button id="remove" type="button" value="{{this._id}}"> Remove </button>
-        </form>
+
+          <form action = "/articles/{{this._id}}" method = "GET">
+            <input name = "title">
+            <textarea name = "body"></textarea>
+            <button class ="note-add" type="submit" value={{this._id}}>Add Note</button>
+          </form>
+
+          <form action = "/delete/{{this._id}}" method = "POST">
+            <button id="remove" type="button" value="{{this._id}}"> Remove </button>
+          </form>
+
       </li>
       {{/each}}
     </ul>
   </div>
 
-  <div id="notes" class="modal fade" role="dialog">
-    <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Notes</h4>
-                <input type="hidden" id="recId" name="recId" value=""/>
-            </div>
-
-            <div class="modal-body">
-                <p>Note Title</p>
-                <input type="text" id="noteTitle"></input>
-                <p>Note</p>
-                <textarea id="noteBody"></textarea>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" id="addNote" class="btn btn-default" data-dismiss="modal">Save</button>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 
 </div>
-
 
 
 
@@ -92,65 +74,81 @@
 
 
 <script>
-    $(document).ready(function () {
-        var currentURL = window.location.origin;
-        //set database id as hiden field on toggle to later insert note in db with correct article
-        // hide notes block until called for
-        $("#notes").hide();
 
-        $(".note-add").on("click", function () {
-            $("#notes").show();
-            //get article id to find existing notes if any
-            var thisId = $(this).val();
-            //reset note body (otherwise keeps value of previous note)
-            $("#noteTitle").val("");
-            $("#noteBody").val("");
-            //toggle modal
-            $("#myModal").modal('toggle');
-            // set id as hidden field to save the note
-            $("#recId").val($(this).val());
-            // Now make an ajax call for the Article
-            $.ajax({
-                method: "GET",
-                url: "/articles/" + thisId
-            })
-                // With that done, add the note information to the page
-                .done(function (data) {
-                    console.log(data);
-                    // If there's a note in the article
-                    if (data.note) {
-                        // Place the title of the note in the title input
-                        $("#noteTitle").val(data.note.title);
-                        // Place the body of the note in the body textarea
-                        $("#noteBody").val(data.note.body);
-                    }
-                });
-        });
-        $("#addNote").on("click", function () {
-            //save note to an article
-            var userData = {
-                id: $("#recId").val(),
-                title: $("#noteTitle").val(),
-                note: $("#noteBody").val()
-            }
-            $.post(currentURL + "/articles/:userData.id", userData, function (data) {
-            });
-            $("#notes").hide();
-        });
-        $("#remove").on("click", function () {
+  
+// When you click the note-add button
+
+$(document).on("click", ".note-add", function() {
+
+     // Empty the notes from the note section
+  $("#notes").empty();
+  
+    console.log('note add clicked, at id: ' + thisId);
+  // Grab the id associated with the article from the submit button
+
+  var thisId = $(this).val());
+  var currentURL = window.location.origin;
+
+  // Run a POST request to change the note, using what's entered in the inputs
+  $.ajax({
+    method: "POST",
+    url: currentURL +"/articles/" + thisId,
+    data: {
+      // Value taken from title input
+      title: $("#titleinput").val(),
+      // Value taken from note textarea
+      body: $("#bodyinput").val()
+    }
+  })
+    // With that done
+    .done(function(data) {
+      // Log the response
+      console.log(data);
+      // Empty the notes section
+      $("#notes").empty();
+    });
+
+  // Also, remove the values entered in the input and textarea for note entry
+  $("#titleinput").val("");
+  $("#bodyinput").val("");
+});
+
+
+
+       $("#remove").on("click", function() {
             //delete an article
+        var currentURL = window.location.origin;
+            
             var url = currentURL + "/delete/" + $(this).val();
             console.log(url);
             $.post(url, function (data) {
                 window.location.reload();
             });
         });
-    });
+
+        //$("#scrape").on("click",function(){
+        //var currentURL = window.location.origin;
+            
+        //    var url = currentURL + "/nyt";
+        //    $.post(url,function(data){
+        //        window.location.reload();
+        //        console.log('scrape post');
+        //    });
+        //});
+
+        $("#view").on("click", function(){
+        var currentURL = window.location.origin;
+            
+            var url = currentURL + "/articles";
+            $.post(url,function(data){
+                window.location.reload();
+                console.log('view post');
+            });
+        });
+
+
+
 </script>
-
-
-
-
 
 
 
