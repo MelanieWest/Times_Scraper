@@ -49,8 +49,8 @@
           </h4>
 
           <form action = "/articles/{{this._id}}" method = "GET">
-            <input name = "title">
-            <textarea name = "body"></textarea>
+            <input name = "title">{{this._id.note.title}}
+            <textarea name = "body">{{this._id.note.body}}</textarea>
             <button class ="note-add" type="submit" value={{this._id}}>Add Note</button>
           </form>
 
@@ -78,7 +78,7 @@
   
 // When you click the note-add button
 
-$(document).on("click", ".note-add", function() {
+$(document).on("click", ".note-add", function(data) {
 
      // Empty the notes from the note section
   $("#notes").empty();
