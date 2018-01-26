@@ -28,19 +28,17 @@
 
   <div id="articles" >
 
-    <h4>New York Times Articles </h4>
-
-    <ul>
+      <ul>
       {{#each data }}
       <li>
  
         {{!-- <form action="/update/{{this._id}}" method="POST"> --}}
 
-          <h3>{{this.title}}</h3>
+          <h4>{{this.title}}</h4>
           <br>
-          <h4>Link :
+          <h5>Link :
             <a href="{{this.link}}" target="_blank">{{this.link}}</a>
-          </h4>
+          </h5>
 
           <form action = "/articles/{{this._id}}" method = "GET">
             <input name = "title">{{this._id.note.title}}
